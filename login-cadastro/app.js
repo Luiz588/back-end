@@ -26,6 +26,10 @@ app.get("/", (req, res)=>{
     res.sendFile(__dirname + '/login.html')
 })
 
+app.get("/cadastro", (req, res)=>{
+    res.sendFile(__dirname + '/cadastro.html')
+})
+
 app.post("/login", (req, res)=>{
     const username = req.body.username
     const password = req.body.password
@@ -43,6 +47,28 @@ app.post("/login", (req, res)=>{
         }
     })
 })
+
+app.post("/cadastro", (req, res)=>{
+    const username = req.body.username
+    const password = req.body.password
+    const confirm = req.body.passwordConfirm
+
+    console.log(password);
+    console.log(confirm);
+
+    if (password === confirm){
+        db.query('insert into user (username, password) values (?,?)', [username, password], (error, results) => {
+            if (error){
+                console.log("erro ao realizar o cadastro", error);
+            }else{
+                console.log("Cadastro realizado com sucesso");   
+            }
+        })
+    }else{
+        console.log('Senhas não coincidem')
+    }
+});
+
 
 app.listen(port, ()=>{
     console.log(`Servidor rodando no endereço: http://localhost:${port}`)
