@@ -30,7 +30,7 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title text-center">Cadastro</h5>
-          <form action="/cadastro" method="POST">
+          <form action="/cadastro" method="POST" id="cadastroForm">
             <div class="form-group">
               <label for="username">Usuário</label>
               <input type="text" class="form-control" id="username" name="username" placeholder="Nome do usuário" required>
@@ -53,6 +53,21 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.getElementById("cadastroForm").addEventListener("submit", function(event){
+    const password = document.getElementById("password").value;
+    const confirm = document.getElementById("passwordConfirm").value;
+
+    if (password !== confirm) {
+      let span = document.createElement("span");
+      span.classList.add("alert");
+      span.textContent = "As senhas não coincidem";
+      document.getElementById("confirm-group").appendChild(span);
+      event.preventDefault();
+    }
+  })
+</script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
